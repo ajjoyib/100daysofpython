@@ -1,0 +1,36 @@
+## LIST COMPREHENSION
+# new_list = [new_item for item in list]
+numbers = [1, 2, 3]
+new_list = [n+1 for n in numbers]
+print(new_list)
+
+# new_list = [new_item for item in list if test]
+names = ["Alex", "Beth", "Caroline", "Eleanor", "Freddie"]
+short_names = [name for name in names if len(name) < 5]
+uppercase_names = [name.upper() for name in names if len(name) >5]
+
+
+## DICTIONARY COMPREHENSION
+import random
+# new_dict = {new_key:new_value for item in list}
+names = ["Alex", "Beth", "Caroline", "Eleanor", "Freddie"]
+students_scores = {student:random.randint(1, 100) for student in names}
+print(students_scores)
+# new_dict = {new_key:new_value for (key, value) in dict.items()}
+# new_dict = {new_key:new_value for (key, value) in dict.items() if test}
+passed_students = {student:score for (student, score) in students_scores.items() if score > 60}
+print(passed_students)
+
+
+## LOOP THROUGH ROWS OF A DATA FRAME
+import pandas
+student_dict = {
+    "student": ["Angela", "James", "Lily"],
+    "score":[56, 76, 98],
+}
+student_data_frame = pandas.DataFrame(student_dict)
+for (index, row) in student_data_frame.iterrows():
+    print(index)
+    print(row)
+    print(row.student)
+    print(row.score)

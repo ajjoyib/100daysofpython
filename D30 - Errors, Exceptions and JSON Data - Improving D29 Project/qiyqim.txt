@@ -1,0 +1,21 @@
+/*/*/ ERROR HANDLING
+# try:
+#     file = open("a_file.txt")
+#     a_dictionary = {"key":"value"}
+#     print(a_dictionary["djkal;"])
+# except FileNotFoundError:
+#     file = open("a_file.txt", "a")
+# except KeyError as error_message:
+#     print(f"That key {error_message} doesn't exist.")
+# else:
+#     content = file.read()
+#     print(content)
+# finally:
+#     raise KeyError
+
+
+/*/*/ JSON
+ -------------------------------------------------
+|     WRITE     |     READ      |     UPDATE      |
+|  json.dump()  |  json.load()  |  json.update()  |
+ -------------------------------------------------

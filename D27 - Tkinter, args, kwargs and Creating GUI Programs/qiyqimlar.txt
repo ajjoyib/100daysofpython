@@ -1,0 +1,27 @@
+from tkinter import *
+
+window = Tk()
+window.title("My First GUI Program")
+window.minsize(width=500, height=300)
+
+## LABEL
+# Setting Options
+# 1: at object creation time
+my_label = Label(text="I am a label", font=("Arial", 24))
+# 2: after object creation, treating the option name like a dictionary index
+my_label["bg"] = "red"
+# 3: using the config() method to update multiple attrs after object creation
+my_label.config(fg="black", font=("Arial", 33))
+# .pack() displays and aligns to center
+my_label.pack()
+print(my_label.keys())
+
+
+
+
+
+
+
+
+
+window.mainloop()

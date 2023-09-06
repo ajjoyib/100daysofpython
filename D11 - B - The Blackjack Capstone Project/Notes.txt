@@ -1,0 +1,2 @@
+J, Q, and K - count as 10
+A - can count as either 1 or 11 

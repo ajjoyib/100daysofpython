@@ -1,0 +1,109 @@
+# with open("weather_data.csv") as data_file:
+#     data = data_file.readlines()
+#     print(data)
+
+# import csv
+#
+# with open("weather_data.csv") as data_file:
+#     data = csv.reader(data_file)
+#     temperatures = []
+#     for row in data:
+#         print(row)
+#         temperatures.append(row[1])
+#     temperatures.remove('temp')
+## LIST COMPREHENSIONS
+## newlist = [expression for item in  iterable if condition == True]
+## newlist = [x for x in fruits if x != "apple"]
+#     temperatures = [int(x) for x in temperatures]
+#     print(temperatures)
+
+# import csv
+#
+# with open("weather_data.csv") as data_files:
+#     data = csv.reader(data_files)
+#     temperature = []
+#     for row in data:
+#         if row[1] != "temp":
+#             temperature.append(int(row[1]))
+#     print(temperature)
+
+# import pandas
+#
+# data = pandas.read_csv("weather_data.csv")
+# print(data["temp"])
+
+
+# import pandas
+# import averager
+# data = pandas.read_csv("weather_data.csv")
+# # print(type(data))
+# # print(type(data["temp"]))
+#
+# data_dict = data.to_dict()
+# # print(data_dict)
+#
+# # data_dict_format = {
+# #     'day': {0: 'Monday', 1: 'Tuesday', 2: 'Wednesday', 3: 'Thursday', 4: 'Friday', 5: 'Saturday', 6: 'Sunday'},
+# #     'temp': {0: 12, 1: 14, 2: 15, 3: 14, 4: 21, 5: 22, 6: 24},
+# #     'condition': {0: 'Sunny', 1: 'Rain', 2: 'Rain', 3: 'Cloudy', 4: 'Sunny', 5: 'Sunny', 6: 'Sunny'}
+# #     }
+#
+# # temp_list = data["temp"].to_list()
+# # print(temp_list)
+# # print(averager.average_calculator(temp_list))
+
+import pandas
+
+data = pandas.read_csv("weather_data.csv")
+
+# data_dict = data.to_dict()
+# print(data_dict)
+#
+# temp_list = data["temp"].to_list()
+# print(temp_list)
+#
+# # average = sum(temp_list) / len(temp_list)
+# # print(average)
+#
+# average = data["temp"].mean()
+# print(f"Average: {average}")
+#
+# max_temp = data["temp"].max()
+# print(f"Max: {max_temp}")
+
+# print(data.temp)
+## Printing the row
+# print(data[data.day == "Monday"])
+# print(data[data.temp == data.temp.max()])
+# monday = data[data.day == "Monday"]
+# print(monday.condition)
+#
+# from averager import ctof
+# # monday_temp = data[data.day == "Monday"].temp
+# print(ctof(data[data.day == "Monday"].temp))
+
+## HOW TO CREATE A DATA FRAME FROM SCRATCH
+# data_dict = {
+#     "students": ["Amy", "James", "Angela"],
+#     "scores": [76, 56, 65],
+# }
+#
+# data = pandas.DataFrame(data_dict)
+# print(data)
+# data.to_csv("new_data.csv")
+
+## SQUIRREL COUNT
+#import pandas
+#
+# data = pandas.read_csv("2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv")
+# gray_squirrel_count = len(data[data["Primary Fur Color"] == "Gray"])
+# red_squirrel_count = len(data[data["Primary Fur Color"] == "Cinnamon"])
+# black_squirrel_count = len(data[data["Primary Fur Color"] == "Black"])
+#
+# data_dict = {
+#     "Fur Color": ["Gray", "Red", "Black"],
+#     "Count": [gray_squirrel_count, red_squirrel_count, black_squirrel_count]
+# }
+#
+# df = pandas.DataFrame(data_dict)
+# df.to_csv("squirrel_count.csv")
