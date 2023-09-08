@@ -10,7 +10,6 @@ MY_EMAIL = "hamidullo287@gmail.com"
 MY_PASSWORD = "20@lfraganuS04"
 
 
-
 # your position is within +5 or -5 degrees of the ISS position
 def is_iss_above():
     response01 = requests.get(url="http://api.open-notify.org/iss-now.json")
@@ -18,9 +17,11 @@ def is_iss_above():
     data = response01.json()
     iss_latitude = float(data["iss_position"]["latitude"])
     iss_longitude = float(data["iss_position"]["longitude"])
-    if MY_LAT-5 <= iss_latitude <= MY_LAT+5 and MY_LNG-5 <= iss_longitude <= MY_LNG+5:
+    if MY_LAT - 5 <= iss_latitude <= MY_LAT + 5 and MY_LNG - 5 <= iss_longitude <= MY_LNG + 5:
         return True
-    else: return False
+    else:
+        return False
+
 
 def is_night():
     parameters = {
@@ -39,7 +40,9 @@ def is_night():
 
     if now > sunset or now < sunrise:
         return True
-    else: return False
+    else:
+        return False
+
 
 while True:
     time.sleep(60)
@@ -52,5 +55,3 @@ while True:
             to_addrs=MY_EMAIL,
             msg="Subject:Look Up\n\nThe ISS is above you in the sky."
         )
-
-
