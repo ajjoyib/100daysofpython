@@ -1,0 +1,7 @@
+{
+    "python.testing.pytestArgs": [
+        "Day 7 - B - Hangman"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
+}
