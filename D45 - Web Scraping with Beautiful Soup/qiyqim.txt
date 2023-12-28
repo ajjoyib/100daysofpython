@@ -1,0 +1,23 @@
+import requests
+from bs4 import BeautifulSoup
+
+response = requests.get(url="https://news.ycombinator.com/news")
+yc_web_page = response.text
+
+soup = BeautifulSoup(yc_web_page, "html.parser")
+articles = soup.find_all(name="span", class_="titleline")
+
+article_texts = [title.getText() for title in articles]
+
+# Find the links directly from the span elements
+article_links = [link.a.get("href") if link.a else None for link in articles]
+
+# Find scores from the sibling span with class 'score' for each titleline
+article_scores = [int(score.getText().split()[0]) if score else None for score in soup.find_all(name="span", class_="score")]
+
+largest_number = max(article_scores)
+largest_index = article_scores.index(largest_number)
+
+print(article_texts[largest_index])
+print(article_links[largest_index])
+print(largest_number)
