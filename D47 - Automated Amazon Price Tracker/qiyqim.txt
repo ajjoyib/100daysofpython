@@ -1,0 +1,72 @@
+import requests
+from bs4 import BeautifulSoup
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from getpass import getpass
+
+URL = "https://www.amazon.com/Walter-Isaacson-Biography-Geniuses-Benjamin/dp/1982130423/?_encoding=UTF8&pd_rd_w=wvttL&content-id=amzn1.sym.9119971c-28e7-426d-b1df-798ac36bb5cd%3Aamzn1.symc.e5c80209-769f-4ade-a325-2eaec14b8e0e&pf_rd_p=9119971c-28e7-426d-b1df-798ac36bb5cd&pf_rd_r=MFBPG2N7Q99HG7WQC370&pd_rd_wg=XgSvy&pd_rd_r=a167295c-f8a3-4fcf-928c-c258b8f68c38&ref_=pd_gw_ci_mcx_mr_hp_atf_m"
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Whale/3.24.223.18 Safari/537.36",
+    "Accept-Language": "en-US,en;q=0.9,ja;q=0.8",
+}
+
+def get_data(url, header):
+    try:
+        r = requests.get(URL, headers=headers)
+        r.raise_for_status()
+        website_html = r.text
+
+        s = BeautifulSoup(website_html, "lxml")
+        # Getting the product name
+        name = s.find("span", id="productTitle").get_text()
+        # Getting the price
+        price_tag = s.find("span", id="price").get_text()
+        # price = "".join(char if char.isdigit() or char == "." else "" for char in price_tag)
+        price = float(price_tag.split("$")[1])
+        return [name.strip(), price]
+    except requests.RequestException as e:
+        print(f"Error: {e}")
+
+def notifier(data):
+    # Email configurationd
+    sender_email = "hamidullo287@gmail.com"
+    receiver_email = "h.davlatov@outlook.com"
+    subject = f"Price Drop Alert: {data[0]}"
+    body = f"Hello, \nWe hope this message finds you well. We wanted to inform you about an exciting update regarding the product you've been keeping an eye on - {data[0]}.\nWe're pleased to let you know that the price for {data[0]} has dropped below what you saw last time. Now it costs {data[1]}. Use this great opportunity to make your purchase and take advantage of this special offer."
+
+    # Gmail SMTP server configuration
+    smpt_server = "smtp.gmail.com"
+    smtp_port = 587
+    smtp_username = "hamidullo287@gmail.com"
+    smtp_password = getpass("Input your password: ")
+
+    # Create the email message
+    message = MIMEMultipart()
+    message["From"] = sender_email
+    message["To"] = receiver_email
+    message["Subject"] = subject
+    message.attach(MIMEText(body, "plain"))
+    
+    if data[1] < 75:
+        try:
+            with smtplib.SMTP(smpt_server, smtp_port) as connection:
+                connection.starttls()
+                connection.login(smtp_username, smtp_password)
+                connection.sendmail(
+                    from_addr=sender_email,
+                    to_addrs=receiver_email,
+                    msg=body.as_string()
+                )
+            print("Email sent successfully!")
+        except smtplib.SMTPAuthenticationError as e:
+            print(f"SMTP Authentication Error: {e}")
+        except Exception as e:
+            print(f"Error sending email: {e}")
+
+data = get_data(URL, headers)
+print(data)
+if data:
+    notifier(data)
+
+    
