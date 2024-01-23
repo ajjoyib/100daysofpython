@@ -8,8 +8,8 @@ import time
 import random
 
 # Credentials
-EMAIL = "hamidullo287@gmail.com"
-PASSWORD = "f@c3800K_@uth"
+EMAIL = "myemail"
+PASSWORD = "mypassword"
 
 # Optional - to make sure that chrome stays opened
 chrome_options = webdriver.ChromeOptions()

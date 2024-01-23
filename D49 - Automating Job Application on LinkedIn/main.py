@@ -1,7 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
-from src import *
 import time
 
 def abort_application():
@@ -29,8 +28,8 @@ driver.get(URL)
 time.sleep(1)
 driver.find_element(By.XPATH, '/html/body/div[4]/a[1]').click()
 time.sleep(1)
-driver.find_element(By.ID, "username").send_keys(USERNAME)
-driver.find_element(By.ID, "password").send_keys(PASSWORD)
+driver.find_element(By.ID, "username").send_keys("USERNAME")
+driver.find_element(By.ID, "password").send_keys("PASSWORD")
 driver.find_element(By.XPATH, '//*[@id="organic-div"]/form/div[3]/button').click()
 
 # Get job listings
@@ -51,7 +50,7 @@ for listing in all_listings:
         time.sleep(2)
         phone = driver.find_element(By.CSS_SELECTOR, "input[id*=phoneNumber]")
         if not phone.text:
-            phone.send_keys(PHONE)
+            phone.send_keys("PHONE")
 
         # Check the Submit Button
         submit_button = driver.find_element(By.CSS_SELECTOR, "footer button")
