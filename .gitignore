@@ -1,2 +1,16 @@
 keys
 config.ini
+./flask-tutorial/.venv
+
+./flask-tutorial/*pyc
+./flask-tutorial/__pycache__/
+
+./flask-tutorial/instances/ 
+
+./flask-tutorial/.pytests_cache/
+./flask-tutorial/coverage
+./flask-tutorial/htmlcov/
+
+.flask-tutorial/dist/
+.flask-tutorial/build/
+.flask-tutorial/*.egg-info/
