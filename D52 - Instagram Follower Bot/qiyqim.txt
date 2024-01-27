@@ -1,0 +1,47 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
+import configparser
+
+config = configparser.ConfigParser()
+config.read("config.ini")
+USERNAME = config["Instagram"]["username"]
+PASSWORD = config["Instagram"]["password"]
+
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_experimental_option("detach", True)
+
+driver = webdriver.Chrome(options=chrome_options)
+
+
+URL =  "https://www.instagram.com/accounts/login/"
+
+
+driver.get(URL)
+
+# Locate username and password fields
+username_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="loginForm"]/div/div[1]/div/label/input')))
+password_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="loginForm"]/div/div[2]/div/label/input')))
+
+# Enter username and password
+username_field.send_keys(USERNAME)
+password_field.send_keys(PASSWORD)
+password_field.send_keys(Keys.ENTER)
+
+# Close pop-ups, handling potential delays and exceptions
+try:
+    # WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Not Now')]"))).click()
+    btn1 = driver.find_element_by_xpath("//button[contains(text(), 'Not Now')]")
+    btn1.click()
+except TimeoutException:
+    print("'Save login info' prompt not found.")
+
+try:
+    # WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Not now')]"))).click()
+    btn2 = driver.find_element_by_xpath("//button[contains(text(), 'Not now')]")
+    btn2.click()
+except TimeoutException:
+    print("'Turn on Notifications' prompt not found.")
