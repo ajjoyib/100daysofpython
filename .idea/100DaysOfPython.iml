@@ -11,6 +11,7 @@
     <option name="TEMPLATE_FOLDERS">
       <list>
         <option value="$MODULE_DIR$/D56 - Rendering HTML &amp; Static files and Using Website Templates/templates" />
+        <option value="$MODULE_DIR$/D57 - Templating with Jinja in Fask Applications/templates" />
       </list>
     </option>
   </component>
