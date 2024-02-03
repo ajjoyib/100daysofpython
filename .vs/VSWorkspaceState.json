@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\D36 - Project - Stock Trading News Alert"
+    "\\D36 - Project - Stock Trading News Alert",
+    "\\D51 - Internet Speed Twitter Complaint Bot"
   ],
-  "SelectedNode": "\\D36 - Project - Stock Trading News Alert\\main.py",
+  "SelectedNode": "\\D51 - Internet Speed Twitter Complaint Bot\\internet_speed_twitter_complaint_bot.py",
   "PreviewInSolutionExplorer": false
 }
