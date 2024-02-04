@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-{% include "header.html" ignore missing %}
-<title>Contact</title>
-</head>
-<body>
-        <!-- Navigation-->
-        {% include "nav.html" ignore missing %}
+{% include "header.html" %}
+
         <!-- Page Header-->
         <header class="masthead" style="background-image: url('../static/assets/img/contact-bg.jpg')">
             <div class="container position-relative px-4 px-lg-5">
@@ -82,12 +75,5 @@
                 </div>
             </div>
         </main>
-        <!-- Footer-->
-        {% include "footer.html" ignore missing %}
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <!-- * *                               SB Forms JS                               * *-->
-        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-    </body>
-</html>
+
+{% include "footer.html" %}
