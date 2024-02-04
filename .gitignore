@@ -16,3 +16,4 @@ config.ini
 .flask-tutorial/*.egg-info/
 
 aws.xml
+jsLibraryMappings.xml
