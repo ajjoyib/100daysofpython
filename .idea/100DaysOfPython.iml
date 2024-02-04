@@ -6,12 +6,13 @@
     </content>
     <orderEntry type="jdk" jdkName="Python 3.12 (_#100daysofpython)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="all" level="application" />
+    <orderEntry type="library" name="sb-forms-latest" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_FOLDERS">
       <list>
-        <option value="$MODULE_DIR$/D56 - Rendering HTML &amp; Static files and Using Website Templates/templates" />
-        <option value="$MODULE_DIR$/D57 - Templating with Jinja in Fask Applications/templates" />
+        <option value="$MODULE_DIR$/D59 - Blog Capstone Project Part 2 - Adding Styling/templates" />
       </list>
     </option>
   </component>
