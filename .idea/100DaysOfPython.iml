@@ -13,6 +13,10 @@
     <option name="TEMPLATE_FOLDERS">
       <list>
         <option value="$MODULE_DIR$/D59 - Blog Capstone Project Part 2 - Adding Styling/templates" />
+        <option value="$MODULE_DIR$/D60 - Make POST Requests with Flask and HTML Forms/templates" />
+        <option value="$MODULE_DIR$/D57 - Templating with Jinja in Fask Applications/templates" />
+        <option value="$MODULE_DIR$/D56 - Rendering HTML &amp; Static files and Using Website Templates/templates" />
+        <option value="$MODULE_DIR$/D55 - HTML &amp; URL Parsing in Flask and the Higher Lower Game/templates" />
       </list>
     </option>
   </component>
