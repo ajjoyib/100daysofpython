@@ -18,6 +18,7 @@
         <option value="$MODULE_DIR$/D56 - Rendering HTML &amp; Static files and Using Website Templates/templates" />
         <option value="$MODULE_DIR$/D55 - HTML &amp; URL Parsing in Flask and the Higher Lower Game/templates" />
         <option value="$MODULE_DIR$/D61 - Building Advanced Forms with Flask-WTForms/templates" />
+        <option value="$MODULE_DIR$/D63 - Databases and SQLite and SQLAlchemy/templates" />
       </list>
     </option>
   </component>
