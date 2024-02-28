@@ -1,3 +1,4 @@
+{#index.html#}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,9 +8,15 @@
   <body>
     <h1>My Library</h1>
     <ul>
-      <li></li>
+        {% if all_books == [] %}
+            <li><p>Library is empty.</p></li>
+        {% else %}
+            {% for book in all_books %}
+                <li>{{ book.title }} - {{ book.author }} - {{ book.rating }}/10</li>
+            {% endfor %}
+        {% endif %}
     </ul>
 
-    <a href="">Add New Book</a>
+    <a href="{{ url_for("add") }}">Add New Book</a>
   </body>
 </html>
