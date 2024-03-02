@@ -59,16 +59,10 @@ def home():
 
 
 # New Add Movie
-@app.route("/add", methods=["GET", "POST"])
-def add_movie():
-    form = FindMovieForm()
-
-    if form.validate_on_submit():
-        movie_title = form.title.data
-        response = requests.get(MOVIE_DB_SEARCH_URL, params={"api_key": MOVIE_DB_API_KEY, "query": movie_title})
-        data = response.json()["results"]
-        return render_template("add.html", options=data, form=form)
-    return render_template("add.html", form=form)
+# @app.route("/add", methods=["GET", "POST"])
+# def add_movie():
+#     form = FindMovieForm()
+#     return render_template("add.html", form=form)
 
 
 
@@ -77,6 +71,7 @@ def rate_movie():
     form = RateMovieForm()
     movie_id = request.args.get("id")
     movie = db.get_or_404(Movie, movie_id)
+
     if form.validate_on_submit():
         movie.rating = float(form.rating.data)
         movie.review = form.review.data
@@ -92,6 +87,18 @@ def delete_movie():
     db.session.delete(movie)
     db.session.commit()
     return redirect(url_for("home"))
+
+
+@app.route("/add", methods=["GET", "POST"])
+def add_movie():
+    form = FindMovieForm()
+    if form.validate_on_submit():
+        movie_title = form.title.data
+
+        response = requests.get(MOVIE_DB_SEARCH_URL, params={"api_key": MOVIE_DB_API_KEY, "query": movie_title})
+        data = response.json()
+        return render_template("select.html", options=data)
+    return render_template("add.html", form=form)
 
 
 @app.route("/find")
@@ -110,7 +117,9 @@ def find_movie():
         )
         db.session.add(new_movie)
         db.session.commit()
-        return redirect(url_for("home"))
+
+        # Redirect ot /edit route
+        return redirect(url_for("rate_movie", id=new_movie.id))
 
 
 if __name__ == '__main__':
