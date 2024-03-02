@@ -8,7 +8,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, Length
 import requests
-from keys import MOVIE_DB_API_KEY, MOVIE_DB_SEARCH_URL
+from keys import *
 
 
 app = Flask(__name__)
@@ -92,6 +92,25 @@ def delete_movie():
     db.session.delete(movie)
     db.session.commit()
     return redirect(url_for("home"))
+
+
+@app.route("/find")
+def find_movie():
+    movie_api_id = request.args.get("id")
+    if movie_api_id:
+        movie_api_url = f"{MOVIE_DB_INFO_URL}/{movie_api_id}"
+        response = requests.get(movie_api_url, params={"api_key": MOVIE_DB_API_KEY, "language": "en-US"})
+        data = response.json()
+        new_movie = Movie(
+            title = data["title"],
+            # The data in release_data includes month and day, we will get rid of it.
+            year = data["release_date"].split("-")[0],
+            img_url = f"{MOVIE_DB_IMAGE_URL}{data['poster_path']}",
+            description = data["overview"]
+        )
+        db.session.add(new_movie)
+        db.session.commit()
+        return redirect(url_for("home"))
 
 
 if __name__ == '__main__':
