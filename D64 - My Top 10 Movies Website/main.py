@@ -10,16 +10,18 @@ from wtforms.validators import DataRequired, Length
 import requests
 from keys import *
 
-
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = "8BYkEfBA6O6donzWlSihBXox7C0sKR6b"
 Bootstrap5(app)
+
 
 # CREATE DB
 class Base(DeclarativeBase):
     pass
+
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///movies.db'
-db=SQLAlchemy(model_class=Base)
+db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
 
@@ -54,16 +56,43 @@ class FindMovieForm(FlaskForm):
 @app.route("/")
 def home():
     result = db.session.execute(db.select(Movie))
-    all_movies = result.scalars()
+    all_movies = result.scalars().all()
+
+    for i in range(len(all_movies)):
+        all_movies[i].ranking = len(all_movies) - i
+    db.session.commit()
+
     return render_template("index.html", movies=all_movies)
 
 
-# New Add Movie
-# @app.route("/add", methods=["GET", "POST"])
-# def add_movie():
-#     form = FindMovieForm()
-#     return render_template("add.html", form=form)
+@app.route("/add", methods=["GET", "POST"])
+def add_movie():
+    form = FindMovieForm()
+    if form.validate_on_submit():
+        movie_title = form.title.data
+        response = requests.get(MOVIE_DB_SEARCH_URL, params={"api_key": MOVIE_DB_API_KEY, "query": movie_title})
+        data = response.json()["results"]
+        return render_template("select.html", options=data)
+    return render_template("add.html", form=form)
 
+
+@app.route("/find")
+def find_movie():
+    movie_api_id = request.args.get("id")
+    if movie_api_id:
+        movie_api_url = f"{MOVIE_DB_INFO_URL}/{movie_api_id}"
+        response = requests.get(movie_api_url, params={"api_key": MOVIE_DB_API_KEY, "language": "en-US"})
+        data = response.json()
+        new_movie = Movie(
+            title=data["title"],
+            # The data in release_data includes month and day, we will get rid of it.
+            year=data["release_date"].split("-")[0],
+            img_url=f"{MOVIE_DB_IMAGE_URL}{data['poster_path']}",
+            description=data["overview"]
+        )
+        db.session.add(new_movie)
+        db.session.commit()
+        return redirect(url_for("rate_movie", id=new_movie.id))
 
 
 @app.route("/edit", methods=["GET", "POST"])
@@ -71,7 +100,6 @@ def rate_movie():
     form = RateMovieForm()
     movie_id = request.args.get("id")
     movie = db.get_or_404(Movie, movie_id)
-
     if form.validate_on_submit():
         movie.rating = float(form.rating.data)
         movie.review = form.review.data
@@ -87,39 +115,6 @@ def delete_movie():
     db.session.delete(movie)
     db.session.commit()
     return redirect(url_for("home"))
-
-
-@app.route("/add", methods=["GET", "POST"])
-def add_movie():
-    form = FindMovieForm()
-    if form.validate_on_submit():
-        movie_title = form.title.data
-
-        response = requests.get(MOVIE_DB_SEARCH_URL, params={"api_key": MOVIE_DB_API_KEY, "query": movie_title})
-        data = response.json()
-        return render_template("select.html", options=data)
-    return render_template("add.html", form=form)
-
-
-@app.route("/find")
-def find_movie():
-    movie_api_id = request.args.get("id")
-    if movie_api_id:
-        movie_api_url = f"{MOVIE_DB_INFO_URL}/{movie_api_id}"
-        response = requests.get(movie_api_url, params={"api_key": MOVIE_DB_API_KEY, "language": "en-US"})
-        data = response.json()
-        new_movie = Movie(
-            title = data["title"],
-            # The data in release_data includes month and day, we will get rid of it.
-            year = data["release_date"].split("-")[0],
-            img_url = f"{MOVIE_DB_IMAGE_URL}{data['poster_path']}",
-            description = data["overview"]
-        )
-        db.session.add(new_movie)
-        db.session.commit()
-
-        # Redirect ot /edit route
-        return redirect(url_for("rate_movie", id=new_movie.id))
 
 
 if __name__ == '__main__':
