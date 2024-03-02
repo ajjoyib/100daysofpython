@@ -39,9 +39,15 @@ with app.app_context():
 
 
 class RateMovieForm(FlaskForm):
-    rating = StringField(label='Your Rating out of 10 e.g. 7.5', validators=[DataRequired(), ])
+    rating = StringField(label='Your Rating out of 10 e.g. 7.5', validators=[DataRequired()])
     review = StringField(label='Your Review', validators=[DataRequired(), Length(min=1, max=75)])
     submit = SubmitField(label='Done')
+
+
+# New Find Movie Form
+class FindMovieForm(FlaskForm):
+    title = StringField(label="Movie Title", validators=[DataRequired()])
+    submit = SubmitField("Add Movie")
 
 
 @app.route("/")
@@ -49,6 +55,14 @@ def home():
     result = db.session.execute(db.select(Movie))
     all_movies = result.scalars()
     return render_template("index.html", movies=all_movies)
+
+
+# New Add Movie
+@app.route("/add", methods=["GET", "POST"])
+def add_movie():
+    form = FindMovieForm()
+    return render_template("add.html", form=form)
+
 
 
 @app.route("/edit", methods=["GET", "POST"])
