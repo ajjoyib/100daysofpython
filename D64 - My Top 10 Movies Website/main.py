@@ -8,6 +8,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, Length
 import requests
+from keys import MOVIE_DB_API_KEY, MOVIE_DB_SEARCH_URL
 
 
 app = Flask(__name__)
@@ -61,6 +62,12 @@ def home():
 @app.route("/add", methods=["GET", "POST"])
 def add_movie():
     form = FindMovieForm()
+
+    if form.validate_on_submit():
+        movie_title = form.title.data
+        response = requests.get(MOVIE_DB_SEARCH_URL, params={"api_key": MOVIE_DB_API_KEY, "query": movie_title})
+        data = response.json()["results"]
+        return render_template("add.html", options=data)
     return render_template("add.html", form=form)
 
 
