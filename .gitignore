@@ -18,3 +18,4 @@ config.ini
 aws.xml
 jsLibraryMappings.xml
 keys.py
+.pyc
