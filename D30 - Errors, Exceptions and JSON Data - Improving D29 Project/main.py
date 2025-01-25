@@ -83,8 +83,11 @@ window.config(padx=50, pady=50)
 
 # display the logo image
 canvas = Canvas(width=200, height=200, highlightthickness=0)
-logo_img = PhotoImage(file="logo.png")
-canvas.create_image(100, 100, image=logo_img)
+try: 
+    logo_img = PhotoImage(file="logo.png")
+    canvas.create_image(100, 100, image=logo_img)
+except Exception as e:
+    print(f"Error loading logo image: {e}")
 canvas.grid(row=1, column=2)
 
 # Labels
